@@ -142,7 +142,7 @@ Please use the [OpenAI's FID evaluation toolkit](https://github.com/openai/guide
 
 ## Training
 
-TODO
+Please refer to the `training_code` folder.
 
 ## License
 
