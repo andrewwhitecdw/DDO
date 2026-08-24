@@ -160,9 +160,9 @@ class VAR_DDOTrainer(object):
         img_logp_gap = img_logps - img_ref_logps
         fake_img_logp_gap = fake_img_logps - fake_img_ref_logps
 
-        real_weight = torch.ones_like(uncond_mask)
+        real_weight = torch.ones_like(uncond_mask, dtype=torch.float32)
         real_weight[uncond_mask] = max(self.alpha, 1.0)
-        fake_weight = torch.ones_like(uncond_mask) * self.alpha
+        fake_weight = torch.ones_like(uncond_mask, dtype=torch.float32) * self.alpha
         fake_weight[uncond_mask] = 0.0
         loss = - (real_weight * F.logsigmoid(self.beta * img_logp_gap)).mean() - (fake_weight * F.logsigmoid(-self.beta * fake_img_logp_gap)).mean()
         loss = loss / max(self.alpha, 1.0)
@@ -232,4 +232,4 @@ class VAR_DDOTrainer(object):
                 if hasattr(m, '_orig_mod'):
                     m = m._orig_mod
                 state[k] = m.state_dict()
-        return state['var_wo_ddp']
+        return state
